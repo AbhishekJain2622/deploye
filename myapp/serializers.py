@@ -1,7 +1,7 @@
 # In your `serializers.py` file
 
 from rest_framework import serializers
-from .models import Contact, About, Skill, Experience, Project, Post, Comment, Like
+from .models import Contact, About, Skill, Experience, Project, Post, Comment, Like,Resume
 
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,3 +49,13 @@ class PostSerializer(serializers.ModelSerializer):
         
     def get_likes_count(self, obj):
         return obj.likes.count()
+    
+    
+    
+class ResumeSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Resume model.
+    """
+    class Meta:
+        model = Resume
+        fields = '__all__'

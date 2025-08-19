@@ -14,7 +14,7 @@ from .views import (
     PostListCreateView,
     PostDetailView,
     CommentCreateView,
-    LikeView,
+    LikeView,ResumeUploadView, ResumeDownloadView 
 )
 
 urlpatterns = [
@@ -31,4 +31,7 @@ urlpatterns = [
     path('blog/<slug:slug>/', PostDetailView.as_view(), name='post-detail'),
     path('blog/<slug:slug>/comments/', CommentCreateView.as_view(), name='comment-create'),
     path('blog/<slug:slug>/like/', LikeView.as_view(), name='like-post'),
+    # Resume URLs (Add these new paths)
+    path('resume/upload/', ResumeUploadView.as_view(), name='resume-upload'),
+    path('resume/download/', ResumeDownloadView.as_view(), name='resume-download'),
 ]

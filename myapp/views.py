@@ -5,11 +5,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .models import About, Skill, Experience, Project, Post, Comment, Like
+from .models import About, Skill, Experience, Project, Post, Comment, Like,Resume
 from .serializers import (
     AboutSerializer, SkillSerializer, ExperienceSerializer, 
     ProjectSerializer, ContactSerializer, PostSerializer, 
-    CommentSerializer
+    CommentSerializer,ResumeSerializer
 )
 
 class AboutListCreateView(generics.ListCreateAPIView):
@@ -94,3 +94,28 @@ class LikeView(APIView):
         else:
             Like.objects.create(post=post, session_id=session_id)
             return Response({"message": "Post liked successfully.", "liked": True, "likes_count": post.likes.count()}, status=status.HTTP_201_CREATED)
+        
+class ResumeUploadView(generics.CreateAPIView):
+    """
+    View to upload a new resume.
+    """
+    queryset = Resume.objects.all()
+    serializer_class = ResumeSerializer
+
+class ResumeDownloadView(APIView):
+    """
+    View to retrieve the latest uploaded resume.
+    """
+    def get(self, request, *args, **kwargs):
+        # Get the latest uploaded resume
+        resume = Resume.objects.order_by('-uploaded_at').first()
+        
+        if not resume:
+            return Response({"error": "No resume found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        # You can get the URL of the file here
+        file_url = resume.file.url
+        
+        # This will return a JSON response with the file URL. The frontend will then
+        # use this URL to initiate the download.
+        return Response({"resume_url": file_url}, status=status.HTTP_200_OK)

@@ -80,3 +80,15 @@ class Like(models.Model):
     
     def __str__(self):
         return f'Like from {self.session_id} on {self.post.title}'
+    
+    
+    
+class Resume(models.Model):
+    """
+    Model to store a downloadable resume file.
+    """
+    file = models.FileField(upload_to='resumes/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Resume uploaded on {self.uploaded_at.strftime('%Y-%m-%d')}"

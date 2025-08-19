@@ -1,7 +1,7 @@
 # In your `admin.py` file
 
 from django.contrib import admin
-from .models import Contact, About, Skill, Experience, Project, Post, Comment, Like
+from .models import Contact, About, Skill, Experience, Project, Post, Comment, Like,Resume
 
 # Register your models here.
 # This makes your models visible and editable in the Django admin dashboard.
@@ -93,3 +93,6 @@ class CommentAdmin(admin.ModelAdmin):
 class LikeAdmin(admin.ModelAdmin):
     list_display = ('post', 'session_id')
     list_filter = ('post',)
+    
+    
+admin.site.register(Resume) # Register the new Resume model
